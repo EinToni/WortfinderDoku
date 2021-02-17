@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descr:       LaTeX Style für Vorlage für Berichte der DHBW-Karlsruhe
+%% Author:      Prof. Dr. Jürgen Vollmer, juergen.vollmer@dhbw-karlsruhe.de
+%% $Id: bericht.sty,v 1.25 2020/03/13 15:38:13 vollmer Exp $
+%% -*- coding: utf-8 -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ACHTUNG, wenn man eine eigene Format-Datei benutzt dann werden Änderungen an bericht.sty
+%% erst wirksam, wenn die Format-Datei neu erzeugt wurde!!!
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bericht}[2017/10/06 v1.2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% needed packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}   % UTF8-Codierung
+\usepackage{babel}      % Sprachanpassungen für generierte Texte wie "Inhaltsverzeichnis" etc
+\usepackage[T1]{fontenc}% Interne LaTeX Codierungen
+\usepackage[dvipsnames,table]{xcolor} % Extending L A TEX’s color facilities
+\usepackage[babel, german=guillemets]{csquotes}   % Context sensitive quotation facilities.
+\usepackage{xspace}     % http://www.ctan.org/tex-archive/help/Catalogue/entries/xspace.html
+\usepackage{array}      % http://www.ctan.org/tex-archive/help/Catalogue/entries/array.html
+\usepackage{tabularx}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/tabularx.html
+\usepackage{eurosym}    % \euro
+\usepackage{pdfpages}   % http://www.ctan.org/tex-archive/help/Catalogue/entries/pdfpages.html
+\usepackage{needspace}  % http://www.tex.ac.uk/cgi-bin/texfaq2html?label=nopagebrk
+\usepackage[bookmarksopen,bookmarksnumbered]{hyperref}
+\usepackage{bookmark}   % Bookmarks for hyperref
+\usepackage{graphicx}
+\usepackage[headings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{microtype}  % http://tug.ctan.org/tex-archive/macros/latex/contrib/microtype/
+\usepackage{lmodern}    % Computern-Modern Schriftfamilie
+\usepackage{amssymb}    % Symbole
+\usepackage{framed}     % Framed or shaded regions that can break across pages.
+		        % http://dante.ctan.org/tex-archive/help/Catalogue/entries/framed.html
+			% Benutzung siehe erklaerung.tex
+
+\usepackage{wrapfig}    % Bilder von textumfliessen lassen
+
+\usepackage{makeidx}    % Erstellung eines Indexes
+\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abkürzungen, http://www.ctan.org/tex-archive/macros/latex/contrib/acronym/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[printonlyused,withpage]{acronym}
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Definitionen mit Ausgabe im Index
+% gibt #2 aus und fügt #1 bzw. #2 (wenn #1 nicht angegeben) in den Index ein
+\newcommand{\Def}[2][]{%
+   \def\OPTARG{#1}%
+   \def\EMPTY{}%
+   \ifx\OPTARG\EMPTY\index{#2}\else\index{#1}\fi%
+   \textbf{#2}\xspace%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\endinput
+%%
+%% End of file `bericht.sty'.

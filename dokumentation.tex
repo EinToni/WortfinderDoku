@@ -1,0 +1,104 @@
+
+\documentclass[
+   ngerman          % neue deutsche Rechtschreibung
+  ,a4paper          % Papiergrösse
+% ,twoside          % Zweiseitiger Druck (rechts/links)
+% ,10pt             % Schriftgrösse
+  ,11pt
+% ,12pt
+  ,pdftex
+%  ,disable         % Todo-Markierungen auschalten
+]{report}
+
+\usepackage[utf8]{inputenc}        
+
+\usepackage{dokumentation}
+
+%% ACHTUNG, wenn man eine eigene Formatdatei (bericht.fmt) benutzt, werden Änderungen an bericht.sty
+%% erst wirksam, wenn die Format-Datei neu erzeugt wurde!!!
+%% Genauer alle Änderungen, die textuell vor der nächsten Zeile ".... endofdump...." stehen
+%% werden erst wirksam, wenn die Formatdatei neu erzeugt wurde
+\csname endofdump\endcsname
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Angaben zur Arbeit
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Autor}{Toni Einecker}
+\newcommand{\MatrikelNummer}{3523850}
+\newcommand{\Kursbezeichnung}{Tinf18B3}
+\newcommand{\FirmenName}{SICK AG}
+\newcommand{\FirmenStadt}{Waldkirch}
+\newcommand{\DhbwLogoDeckblatt}{\includegraphics[width=4cm]{Bilder/dhbwLogo.PNG}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Titel}{Dokumentation des Projekts}
+\newcommand{\Was}{Wortfinder}
+\newcommand{\AbgabeDatum}{17. Mai 2021}
+\newcommand{\Abschluss}{Bachelor of Science}
+\newcommand{\Studiengang}{Informatik / Informationstechnik}
+
+\hypersetup{%%
+  pdfauthor={\Autor},
+  pdftitle={\Titel},
+  pdfsubject={\Was}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\includeonly{
+ kapitel1,
+ kapitel2,
+ kapitel3,
+ kapitel4,
+ kapitel5
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Titelseite
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\vspace*{-2cm}
+%\FirmenLogoDeckblatt
+\hfill\DhbwLogoDeckblatt\\[2cm]
+{\Huge \Titel}\\[1cm]
+{\Huge\scshape \Was}\\[1cm]
+{\large für die Prüfung zum}\\[0.5cm]
+{\Large \Abschluss}\\[0.5cm]
+{\large des Studienganges \Studiengang}\\[0.5cm]
+{\large an der}\\[0.5cm]
+{\large Dualen Hochschule Baden-Württemberg Karlsruhe}\\[0.5cm]
+{\large von}\\[0.5cm]
+{\large\bfseries \Autor}\\[1cm]
+{\large Abgabedatum \AbgabeDatum}
+\vfill
+\end{center}
+\begin{tabular}{l@{\hspace{2cm}}l}
+Matrikelnummer	                 & \MatrikelNummer		\\
+Kurs			         & \Kursbezeichnung		\\
+\end{tabular}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Verzeichnisse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{Roman}
+\newpage
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Inhalt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{arabic}
+\include{kapitel1}
+\include{kapitel2}
+\include{kapitel3}
+\include{kapitel4}
+\include{kapitel5}
+
+\end{document}
