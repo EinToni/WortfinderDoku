@@ -1,17 +1,51 @@
 \chapter{Clean Architecture}
 
-Zum implementieren der Clean Architecture wurde ein UML Diagramm erstellt um die aktuellen Abhängigkeiten zu sehen.
+Zum implementieren der Clean Architecture wurde ein UML Diagramm erstellt (Abb.~\ref{Abb:CleanArchitectureBEFORE} im Anhang) um die aktuellen Abhängigkeiten zu sehen, dabei wurden ein paar Abhängigkeitspfeile weggelassen welche von weit außen nach innen gehen und die Lesbarkeit zu sehr verringern. 
 
-\begin{figure}[!h]
+
+Für die Struktur der Clean Architektur wurde sich auf 3 Schichten festgelegt, da die Funktionsweise des Programms recht simpel ist. Die innerste Schicht beinhaltet alle Entitäten welche zur strukturierten Datenspeicherung verwendet werden. Die mittlere Schicht umfasst die Anwendungslogik. Die äußere Schicht beinhaltet die Interaktion mit allem Außerhalb, d.h. die Controller zum lesen und schreiben der Daten auf der Festplatte sowie die GUI Elemente mit jeweiligen Controllern. 
+
+
+\begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.75\textwidth]{Bilder/CleanArchitectureBEFORE.PNG}
-  \caption{Alle Klassen vor dem Rework}
+  \includegraphics[width=0.6\textwidth]{Bilder/ArchitekturSchichten.PNG}
+  \caption[Aufbau der Schichten der Clean Architecture]{Aufbau der Schichten der Clean Architecture \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/ArchitekturSchichten.png}{(link)}}
+  \label{Abb:ArchitekturSchichten}
 \end{figure}
 
-\begin{figure}[!h]
+
+Ein großes Problem sind hierbei Abhängigkeiten von Innen nach Außen, wie z.B. die \textit{WordFinder} Klasse (generiert alle möglichen Buchstabenkombinationen in einem Spielfeld), welche direkt auf den \textit{DataController} (nutzt die Wortliste auf der Festplatte) zu greift. Die Abhängigkeit wird durch Dependency Inversion, d.h. die Erstellung eines Interfaces welches die äußere Klasse implementiert und die innere nutzt, umgedreht \href{https://github.com/EinToni/Wortfinder/commit/586681478211a26abc661239ecc2c297ef77041e}{(link zum Commit)}:
+
+\begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.75\textwidth]{Bilder/CleanArchitectureAFTER.PNG}
-  \caption{Alle Klassen nach dem Rework}
+  \includegraphics[width=0.8\textwidth]{Bilder/DependencyInversion.PNG}
+  \caption[Beispiel der Dependency Inversion]{Beispiel der Dependency Inversion \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/DependencyInversion.png}{(link)}}
+  \label{Abb:DependencyInversion}
 \end{figure}
+
+Wenn innere Klassen äußere erzeugen müssen, wie es beim \textit{WordFinder} der Fall ist, wird das Erzeugungsmuster der abstrakten Fabrik verwendet. Dem \textit{WordFinder} wird dann im Konstruktor eine Referenz auf die Fabrik gegeben. Über die Funktion "GetDataController()" gibt die Fabrik dann eine neue Instanz des \textit{DataController} zurück, wobei der Rückgabetyp im Interface der Fabrik als \textit{IDataController} Deklariert ist \href{https://github.com/EinToni/Wortfinder/commit/26148d6a7ae6784b935a260371672fe16f8bbfa0}{(link zum Commit)}:
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Bilder/AbstrakteFabrik.PNG}
+  \caption[Beispiel der Dependency Inversion]{Beispiel der Dependency Inversion \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/AbstrakteFabrik.png}{(link)}}
+  \label{Abb:AbstrakteFabrik}
+\end{figure}
+
+Außerdem problematisch ist der grundsätzliche Aufbau der Programms sowie speziell der Aufbau des Hauptfensters. Dieses bestand aus einem Grid welches durch den \textit{FieldGenerator} mit Teilfenstern (\textit{LetterBox}, zeigen die Buchstaben an) gefüllt wurde. Jeder \textit{LetterBox} wurde die Instanz des \textit{WordBuilder} gegeben, welchen sie aufrufen wenn sie angeklickt werden.
+
+
+Zur Verbesserung der Trennung zwischen dem Application Code und der GUI, wird das Grid direkt im Code Behind des \textit{MainWindow} durch kaskadieren von speziellen WPF  Elementen aufgebaut. Die Ansteuerung des \textit{MainWindow} erfolgt dann über einen neuen \textit{MainWindowController} dem im Aufruf nur die Größe des Spielfelds und die Buchstaben übergeben werden. Somit erfolgt die Erstellung der GUI separiert vom restlichen Anwendungscode.
+
+
+
+
+
+Vor der Implementierung wurde zuerst das erstellte UML Diagramm abgeändert. Zuerst wurde dabei die Stuktur geändert, dann alle Abhängigkeitspfeile welche nach außen zeigen mittels Dependency Inversion umgedreht und als letztes an notwendigen Stellen eine Abstrakte Fabrik hinzugefügt. Das daraus entstandene Diagramm ist im Anhang als Abbildung~\ref{CleanArchitectureAFTER}.
+
+
+Mit diesen Vorgaben wurde das Diagramm umstrukturiert, sodass alle Klassen an ihrem sinnvollsten Ort sind. Da das Programm vorher ständig mit Funktionen ergänzt wurde bei denen lediglich Wert auf Funktionalität gelegt wurde, sind im Nachhinein betrachtet unnötig komplizierte Strukturen entstanden. Diese werden daher bei der Umstrukturierung des Diagramms zur Clean Architecture auch gleich geändert. 
+%% Beispiel für 
+Ein Beispiel hierfür ist die \textit{FindableWords} Klasse, welche alle im aktuelle laufenden Spiel findbaren Wörter beinhaltet. Diese wurde erst später hinzugefügt, da davor direkt jedes Wort in einer Wortliste mit gültigen Wörtern überprüft wurde. Sowie die \textit{GameGrid} Klasse, welche (unter anderem) die Größe und Buchstaben des Spielfelds beinhaltet. Die findbaren Wörter sowie die Buchstaben im aktuellen Spiel wurden in eine neue Klasse \textit{Game} verschoben welche alle Daten über Spiel enthält. Somit können Spiele auch im Vorhinein generiert und dann geladen werden.
 
 \endinput

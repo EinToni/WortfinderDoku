@@ -52,7 +52,8 @@
  kapitel2,
  kapitel3,
  kapitel4,
- kapitel5
+ kapitel5,
+ anhang
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Titelseite
@@ -93,12 +94,21 @@ Kurs			         & \Kursbezeichnung		\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Inhalt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\cleardoublepage
+\setcounter{savepage}{\arabic{page}}
 \pagenumbering{arabic}
 \include{kapitel1}
 \include{kapitel2}
 \include{kapitel3}
 \include{kapitel4}
 \include{kapitel5}
+
+% Ab hier beginnt der Anhang
+\appendix
+\cleardoublepage
+\pagenumbering{Roman}
+\setcounter{page}{\thesavepage}
+\addcontentsline{toc}{chapter}{Anhang}
+\include{anhang}
 
 \end{document}
