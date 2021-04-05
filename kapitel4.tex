@@ -21,7 +21,7 @@ Danach fallen die zwei gleichen Schachtelungen der for-Schleifen auf. Dabei wird
 \end{figure}
 
 In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.\ref{Abb:ExtractMethod2}). Dabei werden zwei verschachtelte Schleifen ausgelagert, in welchen die betroffene Methode Rekursiv wieder aufgerufen wird. Da bei der Rekursion alle Parameter mitgegeben werden müssen ist ein komplettes auslagern unvorteilhaft, da in diese neue Methode dann ebenfalls alle Parameter weitergegeben werden müssten. Daher wird nur der Teil in eine neue Methode verschoben (Orange markiert), welcher alle benachbarten Positionen im Buchstabengitter findet \href{https://github.com/EinToni/Wortfinder/commit/23cf0b7d1165c1d17235d68f8fca35682ba233ad}{(Link zum Commit)}:
-
+\newpage
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{Bilder/ExtractMethod2.PNG}
@@ -40,9 +40,9 @@ Die Insgesamt Länge des Codes hat sich durch Anwenden der Refactorings nicht ve
   \caption[Long Method Code Smell nach dem Refactoring]{Long Method Code Smell nach dem Refactoring \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/endeRefactoring1.png}{(link)}}
   \label{Abb:endeRefactoring1}
 \end{figure}
-
+\newpage
 \subsection{Duplicated Code}
 
-Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die Ent- und Verschlüsselung übernimmt. \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{(Commit 86e635fc6ddbd436ca012c21e3a00b9246248855)}
+Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die allgemeine Ent- und Verschlüsselung übernimmt. \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{(Commit 86e635fc6ddbd436ca012c21e3a00b9246248855)}
 
 \endinput
