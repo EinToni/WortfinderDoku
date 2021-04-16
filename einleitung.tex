@@ -1,0 +1,25 @@
+\chapter{Einleitung}
+
+Die Anwendung \glqq Wortfinder\grqq{} ist ein Spiel, welches dem Spielprinzip von Wortopia nachempfunden ist. Im Gegensatz zu Wortopia ist diese Anwendung allerdings vollständig offline verfügbar.
+
+%% Spiel prinzip
+Das Spielprinzip ist sehr Simpel. Es wird ein Raster mit Buchstaben angezeigt und in diesem müssen in einer vorgegebenen Zeit möglichst viele Wörter gefunden werden. Zum finden der Wörter lassen sich die Buchstaben mit der Maus verbinden. Je nach Länge des Wortes und der initialen Spielzeit, gibt es für jedes Wort Punkte. Nach einer Partie kann der Spieler seinen Highscore speichern. Die Highscores werden dabei nur lokal gespeichert.
+
+
+%% Funktionalität
+\paragraph{Grobe Funktionalität}
+Die Buchstabenraster werden als \glqq Game\grqq{} Objekte verwaltet. In diesen befindet sich neben dem Buchstabenraster, auch eine Liste aller korrekten findbaren Wörter. Somit kann beim laufenden Spiel angezeigt werden, wie viele Wörter insgesamt findbar sind. Dafür werden diese Objekte im Vorhinein generiert und gespeichert. Dadurch kann direkt nach dem Start der Anwendung mit dem Spielen begonnen werden und es muss nicht auf das fertige generieren von Feldern gewartet werden.
+
+\paragraph{Repositories}
+Der Quellcode der Anwendung sowie die Unit Tests befinden sich in folgendem Repository:
+\begin{itemize}
+\item \textbf{Quellcode:} \href{https://github.com/EinToni/Wortfinder}{github.com/EinToni/Wortfinder}
+\end{itemize}
+
+Nachfolgend sind noch die direkten Links zum Anwendungscode sowie zu den Tests aufgelistet. Außerdem ist auch das Repository mit dieser Dokumentation verlinkt, damit unter Umständen manche Bilder im Original und vergrößert betrachtet werden können.
+
+\begin{itemize}
+\item \textbf{Anwendungscode:} \href{https://github.com/EinToni/Wortfinder/tree/main/Wortfinder}{github.com/EinToni/Wortfinder/tree/main/Wortfinder}
+\item \textbf{Unit Tests:} \href{https://github.com/EinToni/Wortfinder/tree/main/Wortfinder.XUnitTests}{github.com/EinToni/Wortfinder/tree/main/Wortfinder.XUnitTests}
+\item \textbf{Dokumentation:} \href{https://github.com/EinToni/WortfinderDoku}{github.com/EinToni/WortfinderDoku}
+\end{itemize}

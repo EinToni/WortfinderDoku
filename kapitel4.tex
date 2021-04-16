@@ -2,7 +2,7 @@
 
 \subsection{Long Method}
 
-Die Klasse \textit{WordGenerator} ist dafür zuständig alle möglichen Wörter in einem Raster von Buchstaben zu finden. Dafür hat sie zwei Funktionen welche jeweils ca. 50 Zeilen lang sind. Beide Funktionen sind durch viele Schleifen sehr unübersichtlich und fallen unter die Long Method Code Smells. Zum Refactoren des Code Smells wird die Funktion zuerst mittels Extract Method in kleinere Funktionen unterteilt. Dabei wurde direkt noch die If-Abfrage zur besseren Lesbarkeit umgedreht. Die extrahierten Methoden sind in Abb.\ref{Abb:ExtractMethod} in Grün und Orange markiert.\href{https://github.com/EinToni/Wortfinder/commit/b6e3b31e4ef7b597863bc2be073f9e136d4b9594}{(Link zum Commit)}
+Die Klasse \textit{WordGenerator} ist dafür zuständig alle möglichen Wörter in einem Raster von Buchstaben zu finden. Dafür hat sie zwei Funktionen welche jeweils ca. 50 Zeilen lang sind. Beide Funktionen sind durch viele Schleifen sehr unübersichtlich und fallen unter die Long Method Code Smells. Zum Refactoren des Code Smells wird die Funktion zuerst mittels Extract Method in kleinere Funktionen unterteilt. Dabei wurde direkt noch die If-Abfrage zur besseren Lesbarkeit umgedreht. Die extrahierten Methoden sind in Abb.\ref{Abb:ExtractMethod} in Grün und Orange markiert. (Commit:~\href{https://github.com/EinToni/Wortfinder/commit/b6e3b31e4ef7b597863bc2be073f9e136d4b9594}{b6e3b31e4ef7b597863bc2be073f9e136d4b9594})
 
 \begin{figure}[!ht]
   \centering
@@ -11,7 +11,7 @@ Die Klasse \textit{WordGenerator} ist dafür zuständig alle möglichen Wörter 
   \label{Abb:ExtractMethod}
 \end{figure}
 
-Danach fallen die zwei gleichen Schachtelungen der for-Schleifen auf. Dabei wird in \textit{LettersAs2DArray} das Array zu einem 2D Array umstrukturiert, da die Buchstaben in einen Grid angeordnet sind ist so ein Iterieren und suchen von Nachbarn einfacher vorstellbar. Da zwischenzeitlich allerdings die \textit{Coordinate} Klasse eingefügt wurde, welche das Prüfen auf Nachbarschaft übernimmt, lässt sich dieser Code vereinfachen. Das durchlaufen des 2D Arrays (Abb.\ref{Abb:CodeVereinfachen} Orange markiert) wird somit durch ein einmaliges durchlaufen des Ursprünglichen Arrays ersetzt. Die \textit{LettersAs2DArray} Funktion wird hier nur noch für den Aufruf an die nächste Funktion benötigt und kann nach dessen Refactorings komplett entfernt werden. Außerdem kann die, in Grün markierte, Funktionalität welche überprüft ob ein Wort schon in der List ist ebenfalls durch Extract Method ausgelagert werden. Es ergibt sich somit folgender Code \href{https://github.com/EinToni/Wortfinder/commit/f733dabc6753529e597408cc8c76ea0a39a1ff8e}{(Link zum Commit)}:
+Danach fallen die zwei gleichen Schachtelungen der for-Schleifen auf. Dabei wird in der Funktion \textit{LettersAs2DArray} das Array zu einem 2D Array umstrukturiert, da die Buchstaben in einen Raster angeordnet sind ist so ein Iterieren und suchen von Nachbarn einfacher vorstellbar. Da zwischenzeitlich allerdings die \textit{Coordinate} Klasse eingefügt wurde, welche das Prüfen auf Nachbarschaft übernimmt, lässt sich dieser Code vereinfachen. Das durchlaufen des 2D Arrays (Abb.~\ref{Abb:CodeVereinfachen} Orange markiert) wird somit durch ein einmaliges durchlaufen des Ursprünglichen Arrays ersetzt. Die \textit{LettersAs2DArray} Funktion wird hier nur noch für den Aufruf an die nächste Funktion benötigt und kann nach dessen Refactorings komplett entfernt werden. Außerdem kann die in Grün markierte Funktionalität, welche überprüft ob ein Wort schon in der List ist, ebenfalls durch Extract Method ausgelagert werden. Es ergibt sich somit folgender Code (Commit:~\href{https://github.com/EinToni/Wortfinder/commit/f733dabc6753529e597408cc8c76ea0a39a1ff8e}{f733dabc6753529e597408cc8c76ea0a39a1ff8e}):
 
 \begin{figure}[!ht]
   \centering
@@ -20,7 +20,7 @@ Danach fallen die zwei gleichen Schachtelungen der for-Schleifen auf. Dabei wird
   \label{Abb:CodeVereinfachen}
 \end{figure}
 
-In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.\ref{Abb:ExtractMethod2}). Dabei werden zwei verschachtelte Schleifen ausgelagert, in welchen die betroffene Methode Rekursiv wieder aufgerufen wird. Da bei der Rekursion alle Parameter mitgegeben werden müssen ist ein komplettes auslagern unvorteilhaft, da in diese neue Methode dann ebenfalls alle Parameter weitergegeben werden müssten. Daher wird nur der Teil in eine neue Methode verschoben (Orange markiert), welcher alle benachbarten Positionen im Buchstabengitter findet \href{https://github.com/EinToni/Wortfinder/commit/23cf0b7d1165c1d17235d68f8fca35682ba233ad}{(Link zum Commit)}:
+In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.~\ref{Abb:ExtractMethod2}). Dabei werden zwei verschachtelte Schleifen ausgelagert, in welchen die betroffene Methode Rekursiv wieder aufgerufen wird. Da bei der Rekursion alle Parameter mitgegeben werden müssen ist ein komplettes auslagern unvorteilhaft, da in diese neue Methode dann ebenfalls alle Parameter weitergegeben werden müssten. Daher wird nur der Teil in eine neue Methode verschoben (Orange markiert), welcher alle benachbarten Positionen im Buchstabengitter findet \href{https://github.com/EinToni/Wortfinder/commit/23cf0b7d1165c1d17235d68f8fca35682ba233ad}{Commit: 23cf0b7d1165c1d17235d68f8fca35682ba233ad)}:
 \newpage
 \begin{figure}[!ht]
   \centering
@@ -29,20 +29,14 @@ In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.\ref{Abb
   \label{Abb:ExtractMethod2}
 \end{figure}
 
-Danach wird auch hier das zweidimensionale Array durch ein eindimensionales ersetzt. Außerdem lässt sich das innerste foreach durch die Nutzung von der \textit{AddWords} Funktion ersetzen, welche durch Extract Method in der ersten Funktion entstand. 
+Danach wird auch hier das zweidimensionale Array durch ein eindimensionales ersetzt. Außerdem lässt sich das innerste \textit{foreach} durch die Nutzung von der \textit{AddWords} Funktion ersetzen, welche durch Extract Method in der ersten Funktion entstand. 
 
 
-Die Insgesamt Länge des Codes hat sich durch Anwenden der Refactorings nicht verkürzt. Dafür wurde die Lesbarkeit sowie die Wiederverwendbarkeit wesentlich gesteigert. Die fertigen Funktionen sind nachfolgenden Abgebildet \href{https://github.com/EinToni/Wortfinder/commit/e56ec221727039af2f0b6c06985f3b0edf8bdf3c}{(Link zum Commit)}:
+Die Insgesamt Länge des Codes hat sich durch Anwenden der Refactorings nicht verkürzt. Dafür wurde die Lesbarkeit sowie die Wiederverwendbarkeit wesentlich gesteigert. Die fertigen Funktionen sind in Commit \href{https://github.com/EinToni/Wortfinder/commit/e56ec221727039af2f0b6c06985f3b0edf8bdf3c}{e56ec221727039af2f0b6c06985f3b0edf8bdf3c} einsehbar.
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=\textwidth]{Bilder/endeRefactoring1.PNG}
-  \caption[Long Method Code Smell nach dem Refactoring]{Long Method Code Smell nach dem Refactoring \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/endeRefactoring1.png}{(link)}}
-  \label{Abb:endeRefactoring1}
-\end{figure}
 \newpage
 \subsection{Duplicated Code}
 
-Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die allgemeine Ent- und Verschlüsselung übernimmt. \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{(Commit 86e635fc6ddbd436ca012c21e3a00b9246248855)}
+Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die allgemeine Ent- und Verschlüsselung übernimmt. Da die neue Klasse nur Daten von einem Format in ein anderes Konvertiert, wird sie in der Clean Architecture bei den Aufrufenden Klassen in der Adapter-Schicht positioniert. (Commit: \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{ 86e635fc6ddbd436ca012c21e3a00b9246248855})
 
 \endinput
