@@ -2,12 +2,12 @@
 
 \subsection{Long Method}
 
-Die Klasse \textit{WordGenerator} ist dafür zuständig alle möglichen Wörter in einem Raster von Buchstaben zu finden. Dafür hat sie zwei Funktionen welche jeweils ca. 50 Zeilen lang sind. Beide Funktionen sind durch viele Schleifen sehr unübersichtlich und fallen unter die Long Method Code Smells. Zum Refactoren des Code Smells wird die Funktion zuerst mittels Extract Method in kleinere Funktionen unterteilt. Dabei wurde direkt noch die If-Abfrage zur besseren Lesbarkeit umgedreht. Die extrahierten Methoden sind in Abb.\ref{Abb:ExtractMethod} in Grün und Orange markiert. (Commit:~\href{https://github.com/EinToni/Wortfinder/commit/b6e3b31e4ef7b597863bc2be073f9e136d4b9594}{b6e3b31e4ef7b597863bc2be073f9e136d4b9594})
+Die Klasse \textit{WordGenerator} ist dafür zuständig alle möglichen Wörter in einem Raster von Buchstaben zu finden. Dafür hat sie zwei Funktionen welche jeweils ca. 50 Zeilen lang sind. Beide Funktionen sind durch viele Schleifen sehr unübersichtlich und fallen unter die Long Method Code Smells. Zum Refactoren des Code Smells wird die Funktion zuerst mittels Extract Method in kleinere Funktionen unterteilt. Dabei wurde direkt noch die If-Abfrage zur besseren Lesbarkeit umgedreht. Die extrahierten Methoden sind in Abb.~\ref{Abb:ExtractMethod} in Grün und Orange markiert. (Commit:~\href{https://github.com/EinToni/Wortfinder/commit/b6e3b31e4ef7b597863bc2be073f9e136d4b9594}{b6e3b31e4ef7b597863bc2be073f9e136d4b9594})
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{Bilder/ExtractMethod.PNG}
-  \caption[Anwendung des Extract Method Refactoring]{Anwendung des Extract Method Refactoring \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/ExtractMethod.png}{(link)}}
+  \caption[Anwendung des Extract Method Refactoring]{Anwendung des Extract Method Refactoring (\href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/ExtractMethod.png}{Link})}
   \label{Abb:ExtractMethod}
 \end{figure}
 
@@ -16,16 +16,16 @@ Danach fallen die zwei gleichen Schachtelungen der for-Schleifen auf. Dabei wird
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{Bilder/CodeVereinfachen.PNG}
-  \caption[Extract Method und Code Vereinfachung]{Extract Method und Code Vereinfachung \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/CodeVereinfachen.png}{(link)}}
+  \caption[Extract Method und Code Vereinfachung]{Extract Method und Code Vereinfachung (\href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/CodeVereinfachen.png}{Link})}
   \label{Abb:CodeVereinfachen}
 \end{figure}
 
-In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.~\ref{Abb:ExtractMethod2}). Dabei werden zwei verschachtelte Schleifen ausgelagert, in welchen die betroffene Methode Rekursiv wieder aufgerufen wird. Da bei der Rekursion alle Parameter mitgegeben werden müssen ist ein komplettes auslagern unvorteilhaft, da in diese neue Methode dann ebenfalls alle Parameter weitergegeben werden müssten. Daher wird nur der Teil in eine neue Methode verschoben (Orange markiert), welcher alle benachbarten Positionen im Buchstabengitter findet \href{https://github.com/EinToni/Wortfinder/commit/23cf0b7d1165c1d17235d68f8fca35682ba233ad}{Commit: 23cf0b7d1165c1d17235d68f8fca35682ba233ad)}:
+In der zweiten Funktion wird ebenfalls mit Extract Method begonnen (Abb.~\ref{Abb:ExtractMethod2}). Dabei werden zwei verschachtelte Schleifen ausgelagert, in welchen die betroffene Methode Rekursiv wieder aufgerufen wird. Da bei der Rekursion alle Parameter mitgegeben werden müssen ist ein komplettes auslagern unvorteilhaft, da in diese neue Methode dann ebenfalls alle Parameter weitergegeben werden müssten. Daher wird nur der Teil in eine neue Methode verschoben (Orange markiert), welcher alle benachbarten Positionen im Buchstabengitter findet, Commit: \href{https://github.com/EinToni/Wortfinder/commit/23cf0b7d1165c1d17235d68f8fca35682ba233ad}{23cf0b7d1165c1d17235d68f8fca35682ba233ad}):
 \newpage
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{Bilder/ExtractMethod2.PNG}
-  \caption[Extract Method]{Extract Method \href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/ExtractMethod2.png}{(link)}}
+  \caption[Extract Method]{Extract Method (\href{https://github.com/EinToni/WortfinderDoku/blob/main/Bilder/ExtractMethod2.png}{Link})}
   \label{Abb:ExtractMethod2}
 \end{figure}
 
@@ -37,6 +37,6 @@ Die Insgesamt Länge des Codes hat sich durch Anwenden der Refactorings nicht ve
 \newpage
 \subsection{Duplicated Code}
 
-Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die allgemeine Ent- und Verschlüsselung übernimmt. Da die neue Klasse nur Daten von einem Format in ein anderes Konvertiert, wird sie in der Clean Architecture bei den Aufrufenden Klassen in der Adapter-Schicht positioniert. (Commit: \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{ 86e635fc6ddbd436ca012c21e3a00b9246248855})
+Es werden sowohl vorgeladenen Spiele, wie auch Highscores auf der Festplatte lokal gespeichert und beides soll nicht editierbar sein. Daher lädt und speichert die Klasse \textit{ScoreDataController} die Highscores sowie \textit{GameDataController} die vorbereiteten Spiele. Beide beinhalten dabei den gleichen Code für die Ent-/Verschlüsselung. Dieser Duplicated Code wird mittels Extract Method in eine neue Klasse ausgelagert welche die allgemeine Ent- und Verschlüsselung übernimmt. Da die neue Klasse nur Daten von einem Format in ein anderes Konvertiert, wird sie in der Clean Architecture bei den Aufrufenden Klassen in der Adapter-Schicht positioniert. (Commit: \href{https://github.com/EinToni/Wortfinder/commit/86e635fc6ddbd436ca012c21e3a00b9246248855}{86e635fc6ddbd436ca012c21e3a00b9246248855})
 
 \endinput
