@@ -1,11 +1,11 @@
 \chapter{Programming Principles}
-\section{SOLID}
+\section{SOLID}\label{SOLID}
 \paragraph{Single responsibility principle}
-Die meisten Klassen in der Anwendung erfüllen das Prinzip und haben nur eine Zuständigkeit. Ein gutes Beispiel ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameTimer.cs}{\textit{GameTimer}} welcher nur einen Timer starten sowie stoppen kann und bei jedem Tick eine Callback Funktion aufruft. Ein Beispiel für eine Klasse welches es nicht erfüllt hat, ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/MainWindowController.cs}{\textit{MainWindowController}}. Dieser war zum einen der Adapter zwischen dem \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/MainWindow.xaml.cs}{\textit{MainWindow}} und dem \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}}, hat aber auch das Verbinden von Buchstaben in der GUI kontrolliert. Die Funktionalitäten zum Verbinden von Buchstaben wurde daher in eine neue Klasse \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordBuilder.cs}{\textit{WordBuilder}} ausgelagert, Commit \href{https://github.com/EinToni/Wortfinder/commit/817e4b1b6be02defe58792a4afb709c7a147ced5}{817e4b1b6be02defe58792a4afb709c7a147ced5} und der darauf folgende. 
+Die meisten Klassen in der Anwendung erfüllen das Prinzip und haben nur eine Zuständigkeit. Ein gutes Beispiel ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameTimer.cs}{\textit{GameTimer}} welcher nur einen Timer starten sowie stoppen kann und bei jedem Tick eine Callback Funktion aufruft. Ein Beispiel für eine Klasse welches es nicht erfüllt hat, ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/MainWindowController.cs}{\textit{MainWindowController}}. Dieser war zum einen der Adapter zwischen dem \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/MainWindow.xaml.cs}{\textit{MainWindow}} und dem \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}}, hat aber auch das Verbinden von Buchstaben in der GUI kontrolliert. Die Funktionalitäten zum Verbinden von Buchstaben wurde daher in eine neue Klasse \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordBuilder.cs}{\textit{WordBuilder}} ausgelagert, Commit \href{https://github.com/EinToni/Wortfinder/commit/817e4b1b6be02defe58792a4afb709c7a147ced5}{817e4b1b6be02defe58792a4afb709c7a147ced5} sowie der darauf folgende. Es gibt aber auch Klassen bei denen es nicht ganz eindeutig ist, wie z.B. bei der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/EnDecrypter.cs}{\textit{EnDecryptor}} Klasse. Diese ist für das Ver- und das Entschlüsseln zuständig, was generell zwei verschiedene Zuständigkeiten sind. Da beides aber sehr ähnlich ist, lässt es sich auch als die allgemeine Zuständigkeit der Kryptologie auffassen und als eine Zuständigkeit ansehen.
 
 
 \paragraph{Open/Closed principle}
-Eine auffällige Verbesserungsmöglichkeit wurde im \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameScoreCalculator.cs}{\textit{GameScoreCalculator}} gefunden, welcher immer wieder modifiziert wurde um die Punktzahl anders zu berechnen. Die Berechnung wurde nun Erweiterbar ausgelagert. Dafür wurde eine Liste im \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameScoreCalculator.cs}{\textit{GameScoreCalculator}} erstellt welche Klassen eines \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/Interfaces/IPointFactor.cs}{\textit{IPointFactor}} Interfaces beinhaltet. Über diese wird beim Berechnen der Punkte Iteriert und jede Klasse berechnet dann einen Teilbetrag der Punktzahl, bezogen auf einen bestimmten Faktor. Siehe Commit \href{https://github.com/EinToni/Wortfinder/commit/6a4834cfc653a63ed3efc8745bccbe603250da74}{6a4834cfc653a63ed3efc8745bccbe603250da74} sowie die folgende Abbildung:
+Eine auffällige Verbesserungsmöglichkeit bezüglich dem Open/Closed principle wurde im \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameScoreCalculator.cs}{\textit{GameScoreCalculator}} gefunden, welcher immer wieder modifiziert wurde um die Punktzahl anders zu berechnen. Die Berechnung wurde deswegen Erweiterbar ausgelagert. Dafür wurde eine Liste im \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameScoreCalculator.cs}{\textit{GameScoreCalculator}} erstellt welche Klassen eines \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/Interfaces/IPointFactor.cs}{\textit{IPointFactor}} Interfaces beinhaltet. Über diese wird beim Berechnen der Punkte Iteriert und jede Klasse berechnet dann einen Teilbetrag der Punktzahl, bezogen auf einen bestimmten Faktor. Siehe Commit \href{https://github.com/EinToni/Wortfinder/commit/6a4834cfc653a63ed3efc8745bccbe603250da74}{6a4834cfc653a63ed3efc8745bccbe603250da74} sowie Abbildung~\ref{Abb:openClosedExample} auf der folgenden Seite.
 
 \begin{figure}[!htb]
 \centering
@@ -16,34 +16,46 @@ Eine auffällige Verbesserungsmöglichkeit wurde im \href{https://github.com/Ein
 \paragraph{Liskov substitution principle}
 Das Liskov substitution principle ist erfüllt, da Vererbung nur bei Interfaces verwendet wurde.
 
-\paragraph{Interface Segregation principle}
+\paragraph{Interface segregation principle}
+Die verwendeten Interfaces sollen möglichst spezifisch und \glqq passgenau\grqq{} für die Anwender, d.h. die aufrufenden Klassen, sein. Dies ist erfüllt, da alle Interfaces immer nur von einer Klasse verwendet werden (Unit Tests und Instantiierung in der Main vernachlässigt) und somit passgenau auf die Verwendung in dieser Klasse erstellt wurden.
 
 \paragraph{Dependency inversion principle}
 Dependency inversion wurde im Rahmen der Implementierung der Clean Architecture angewendet. Dabei wurden die Abhängigkeiten durch die Einführung von Interfaces bei den betroffenen Klassen an den Grenzen der einzelnen Schichten umgekehrt, wie in Kapitel~\ref{cleanArchitecture} Clean Architecture in Abbildung~\ref{Abb:DependencyInversion} gezeigt.
 
 \section{GRASP}
-\paragraph{Grundkonzept} 
+\paragraph{Kopplung} 
 %% Hohe Kopplung
-Der Code hat stellenweise eine recht hohe Kopplung, da oft Funktionen innerhalb der selben Klasse statisch aufgerufen werden. Ein Beispiel dafür ist die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordGenerator.cs}{\textit{WordGenerator}} Klasse. Diese besteht aus 6 Funktionen, von welchen nur die erste von einer anderen Klasse aufgerufen wird. Alle anderen werden als statische Methodenaufrufe innerhalb der Klasse selbst aufgerufen. Diese Aufrufe stehen fest im Code und sind daher nicht austauschbar wodurch sich eine starke Koppelung ergibt.
+%Der Code hat stellenweise eine recht hohe Kopplung, da oft Funktionen innerhalb der selben Klasse statisch aufgerufen werden. Ein Beispiel dafür ist die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordGenerator.cs}{\textit{WordGenerator}} Klasse. Diese besteht aus 6 Funktionen, von welchen nur die erste von einer anderen Klasse aufgerufen wird. Alle anderen werden als statische Methodenaufrufe innerhalb der Klasse selbst aufgerufen. Diese Aufrufe stehen fest im Code und sind daher nicht austauschbar wodurch sich eine starke Koppelung ergibt.
+Der Code hat stellenweise eine recht hohe Kopplung, da teilweise statische Methodenaufrufe an andere Klassen ohne Interfaces gemacht werden. Ein Beispiel dafür ist die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameGenerator.cs}{\textit{GameGenerator}} Klasse, welche Methodenaufrufe an zwei andere Klassen ohne Interfaces macht. Diese Aufrufe sind somit nicht austauschbar und auch die Klassen an sich sind nicht austauschbar. Eine Verbesserung zur Senkung der Kopplung wäre hier die Einführung von Interfaces.
+
 
 %% Niedrige Kopplung
-Im Vergleich dazu ist ein Beispiel für lose Kopplung die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}} Klasse. Diese macht primär Aufrufe an Interfaces welche austauschbarer sind und ist daher recht lose gekoppelt.
+Im Vergleich dazu ist ein Beispiel für lose Kopplung die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}} Klasse. Diese macht fast nur Aufrufe an Interfaces welche austauschbarer sind und ist daher recht lose gekoppelt. Da in der gesamten Anwendung recht viele Interfaces verwendet werden und der vorherige beschriebene Fall selten ist, ist die Kopplung im allgemeinen eher niedrig.
 
+\paragraph{Kohäsion}
 %% Hohe Kohäsion
 Eine hohe Kohäsion findet sich beispielsweise in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/Coordinate.cs}{\textit{Coordinate}} Klasse wieder. Diese hält zwei Ganzzahlen, welche für den X und Y Wert der Koordinate stehen und stellt Methoden zur Verfügung, welche die Zahlen verwenden um sie mit einer anderen \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/Coordinate.cs}{\textit{Coordinate}} Instanz zu vergleichen oder umzurechnen. Semantisch sind alle Methoden und Attribute somit sehr nah.
 
 
-\paragraph{Code-Strukturierung}
+Aufgrund des Single responsibility principle ist die Kohäsion im allgemeinen eher hoch, da die meisten Klassen nur eine Zuständigkeit haben und somit alle Methoden und Variablen einer Klasse einen Zusammenhang für die Zuständigkeit haben. Die Einhaltung des Interface segregation principle führt ebenfalls zu einer hohen Kohäsion.
+
+\paragraph{Indirektion}
 Es wird viel Indirektion verwendet. Ein gutes Beispiel dafür ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}}, welcher im Grunde alle Aufrufe an verschiedene andere Klassen bzw. Interfaces weiterleitet. Somit delegiert dieser andere Klassen und lässt diese für sich Arbeiten.
 
+\paragraph{Polymorphismus}
+Durch Polymorphismus kann das Verhalten abhängig vom konkreten Typ jeweils geändert werden. Methoden erhalten somit neue Implementierungen. Ein Beispiel wo dies angewendet wird ist die erweiterbare Implementierung  der Berechnung der Punktzahl für das Open/Closed principle aus Kapitel~\ref{SOLID}. Dabei implementieren mehrere Klassen das Interface \textit{IPointFactor} und jedes implementiert die Funktion \glqq GetPoints\grqq{} anders.
 
-\paragraph{Architektur}
-\glqq Pure fabrication\grqq{} findet sich beispielsweise in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/EnDecrypter.cs}{\textit{EnDecoder}} Klasse wieder. Diese ist unabhängig von jeglicher Anwendungslogik und ver- bzw. entschlüsselt einen beliebigen Stream mit einem beliebigen key in ein beliebiges Verzeichnis. Somit lässt sich diese allgemein zum ver- und entschlüsseln von Streams verwenden und hat keinerlei Bezug zur Problemdomäne.
+\paragraph{Pure fabrication}
+Pure fabrication findet sich beispielsweise in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/EnDecrypter.cs}{\textit{EnDecoder}} Klasse wieder. Diese ist unabhängig von jeglicher Anwendungslogik und ver- bzw. entschlüsselt einen beliebigen Stream mit einem beliebigen key in ein beliebiges Verzeichnis. Somit lässt sich diese allgemein zum ver- und entschlüsseln von Streams verwenden und hat keinerlei Bezug zur Problemdomäne.
 
+\paragraph{Protected variations}
+Das Prinzip der protected variations findet sich an den Übergängen zwischen Schichten der Clean Architecture von innen nach Außen wieder. Dabei werden Interfaces verwendet um die inneren Schichten vor der Implementierung der äußeren zu schützen. Beim austauschen der schnelllebigen Plugins werden die inneren Schichten vor der Implementierung der äußeren durch die Adapter, welche für den passenden Anschluss sorgen, geschützt.
 
-\paragraph{Entwurfsmuster}
+\paragraph{Controller}
 Die GUI Elemente (außer das UserControll Element \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordDisplay.xaml.cs}{\textit{WordDisplay}}) kommuniziert immer nur mit einen Controller. Ein Beispiel ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/MainWindowController.cs}{\textit{MainWindowController}}. Dieser Leitet die Aufrufe weiter und bestimmt wer den Aufruf weiter verarbeitet, der \textit{WordBuilder} oder \textit{GameManager}. Dabei wandelt er teilweise auch Datentypen um.
 
+\paragraph{Information expert}
+Das Muster des Experten findet sich bspw. in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/Coordinate.cs}{\textit{Coordinate}} Klasse wieder. Diese beinhaltet neben den Variablen für Zeilen- und Spaltennummer auch alle benötigten Methoden für die Aktionen welche mit den Variablen gemacht werden müssen. Diese umfassen das Vergleichen von Objekten, das Prüfen auf Nachbarschaft und die Umrechnung um die Position in einem eindimensionalen Array zu erhalten.
 
 \section{DRY}
 Das \glqq don't repeat yourself\grqq{} Prinzip wurde im Produktivcode meistens eingehalten, da versucht wurde die mehrfach verwendeten Informationen als Variablen in Klassen zu speichern und wiederzuverwenden. Somit sind die Informationen nur an einem Ort gespeichert. Ein Beispiel für die Einhaltung ist die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameLibrary.cs}{\textit{GameLibrary}} Klasse, welche überprüft das eine gewisse Anzahl an generierten Spielen existiert. Diese Anzahl ist als Variable in der Klasse gespeichert und wird mehrfach verwendet. Somit müsste, zum ändern der Anzahl der zu generierenden Spiele, nur diese eine Variable geändert werden. Ein zweites Beispiel ist der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameDataController.cs}{\textit{GameDataController}}, welcher den Pfad zur Datei und den Schlüssel mit welchem die Datei verschlüsselt ist, als Klassenattribut gespeichert hat und mehrfach verwendet.

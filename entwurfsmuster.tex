@@ -1,8 +1,8 @@
 \chapter{Entwurfsmuster}
 \paragraph{Beobachter}
-Ein im Quellcode des Programms identifiziertes Entwurfsmuster ist das des Beobachters. Dieses findet sich in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameTimer.cs}{\textit{GameTimer}} und \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}} Klasse wieder. Der \textit{GameManager} registriert dabei zwei Callback-Funktionen beim \textit{GameTimer}. Nachdem der Timer gestartet wurde, wird die eine Funktion jede Sekunde, also jeden Tick des Timers, aufgerufen und die andere, sobald der Timer 0 erreicht. Der \textit{GameTimer} ist daher das Subjekt und der \textit{GameManager} der Beobachter.
+Ein im Quellcode des Programms identifiziertes Entwurfsmuster ist das Verhaltensmuster des Beobachters. Dieses findet sich in der \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameTimer.cs}{\textit{GameTimer}} und \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/GameManager.cs}{\textit{GameManager}} Klasse wieder. Der \textit{GameManager} registriert dabei zwei Callback-Funktionen beim \textit{GameTimer}. Nachdem der Timer gestartet wurde, wird die eine Funktion jede Sekunde, also jeden Tick des Timers, aufgerufen und die andere, sobald der Timer 0 erreicht. Der \textit{GameTimer} ist daher das Subjekt und der \textit{GameManager} der Beobachter.
 
-Das UML Diagramm der beiden betroffenen Klassen ist nachfolgend abgebildet:
+Das UML Diagramm der beiden betroffenen Klassen ist nachfolgend abgebildet:\\
 
 \begin{figure}[htb]
 \centering
@@ -10,7 +10,11 @@ Das UML Diagramm der beiden betroffenen Klassen ist nachfolgend abgebildet:
 \caption{\label{Abb:Entwurfsmuster}UML Diagramm des Beobachter Entwurfsmusters}
 \end{figure}
 
+\newpage
+\paragraph{Abstrakte Fabrik}
+Als zweites Entwurfsmuster wurde das Erzeugungsmuster der Abstrakten Fabrik verwendet. Dieses wurde während der Implementierung der Clean Architecture verwendet und bereits in Kapitel~\ref{cleanArchitecture} erläutert. Es wurde bspw. für die \href{https://github.com/EinToni/Wortfinder/blob/main/Wortfinder/WordGenerator.cs}{\textit{WordFinder}} Klasse in Commit \href{https://github.com/EinToni/Wortfinder/commit/586681478211a26abc661239ecc2c297ef77041e}{586681478211a26abc661239ecc2c297ef77041e} implementiert (vgl. Abbildung~\ref{Abb:AbstrakteFabrik}) und später aufgrund der beschriebenen Umstrukturierung wieder entfernt.
+
 \paragraph{Singleton}
-Als zweites Entwurfsmuster wurde die Abwesenheit von Singletons festgestellt. Von jeder Klasse können mehrere Instanzen erzeugt werden und eine Klasse welche bei einem Aufruf wie \glqq GetInstance()\grqq{} die (einzige) Instanz einer anderen Klasse zurück gibt, gibt es nicht.
+Als drittes Entwurfsmuster wurde die Abwesenheit des Erzeugungsmusters Singleton festgestellt. Von jeder Klasse können mehrere Instanzen erzeugt werden und eine Klasse welche bei einem Aufruf wie \glqq GetInstance()\grqq{} die (einzige) Instanz einer anderen Klasse zurück gibt, gibt es nicht.
 
 \endinput
